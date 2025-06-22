@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Enigma Awaits!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Darker, more mysterious gradient */
+            background: linear-gradient(to right top, #2c3e50, #4a6a8a);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+            max-width: 90%;
+            width: 500px; /* Slightly larger container */
+            position: relative;
+            z-index: 10;
+            overflow: hidden; /* For hidden content to animate in */
+        }
+        .initial-content {
+            transition: opacity 0.5s ease-out;
+        }
+        .hidden-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in, transform 1s ease-in;
+        }
+        .hidden-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h1 {
+            font-family: 'Playfair Display', serif; /* Elegant, distinct font */
+            color: #e6b800; /* Gold color */
+            font-size: 4rem; /* Large and impactful */
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            color: #34495e; /* Dark blue-grey text */
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        .button-reveal {
+            background-color: #f39c12; /* Vibrant orange button */
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .button-reveal:hover {
+            background-color: #e67e22; /* Darker orange on hover */
+            transform: translateY(-2px);
+        }
+        .button-reveal:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 30px 20px;
+                width: 320px;
+            }
+            .button-reveal {
+                font-size: 1rem;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="initial-content" id="initialContent">
+            <p class="text-gray-700 mb-6">Для особенной девушки...</p>
+            <button class="button-reveal" id="revealButton">
+                Открой меня
+            </button>
+        </div>
+
+        <div class="hidden-content" id="revealedContent">
+            <!-- CHANGE THE NAME HERE -->
+            <h1 class="text-yellow-600">[Сабришка]</h1>
+            <p class="text-blue-900">Моя дорогая, ты — самая удивительная тайна, которую я когда-либо разгадывал. И каждый день открываю в тебе что-то новое, что делает меня еще счастливее! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('revealButton').addEventListener('click', function() {
+            const initialContent = document.getElementById('initialContent');
+            const revealedContent = document.getElementById('revealedContent');
+
+            // Fade out initial content
+            initialContent.style.opacity = '0';
+            initialContent.style.pointerEvents = 'none'; // Disable clicks during fade
+
+            // Wait for fade out, then reveal new content
+            setTimeout(() => {
+                initialContent.style.display = 'none'; // Hide completely
+
+                revealedContent.classList.add('active'); // Start reveal animation
+            }, 500); // Duration of initial-content fade transition
+        });
+    </script>
+</body>
+</html>
