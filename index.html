@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Message for My Love!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Gradient background for a romantic feel */
+            background: linear-gradient(to right bottom, #ffdde1, #ee9ca7);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden; /* Hide overflowing hearts */
+        }
+        .container {
+            position: relative; /* Needed for absolute positioning of hearts */
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px; /* More rounded corners */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            max-width: 90%;
+            width: 450px; /* Slightly wider */
+            overflow: hidden; /* Ensure hearts stay within container */
+            z-index: 10; /* Ensure container is above floating hearts */
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive; /* More elegant font for her name */
+            color: #d11c1c; /* Deeper red */
+            font-size: 4.5rem; /* Even larger font size for name */
+            font-weight: 700;
+            animation: bounceIn 1.5s ease-out; /* Bouncing entrance animation */
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+        }
+        p {
+            color: #4a000c; /* Dark red for text */
+            font-size: 1.5rem; /* Larger paragraph text */
+            line-height: 1.8;
+            font-weight: 500;
+            margin-top: 0;
+        }
+        .heart {
+            position: absolute;
+            color: #ff69b4; /* Hot pink hearts */
+            font-size: 2rem;
+            animation: floatUp 6s infinite ease-in-out; /* Hearts float up and fade */
+            opacity: 0;
+            z-index: 5;
+        }
+
+        /* Delay for each heart to create a scattered effect */
+        .heart:nth-child(1) { top: 70%; left: 10%; animation-delay: 0s; font-size: 1.8rem; }
+        .heart:nth-child(2) { top: 80%; left: 80%; animation-delay: 1s; font-size: 2.2rem; }
+        .heart:nth-child(3) { top: 60%; left: 40%; animation-delay: 2s; font-size: 2.5rem; }
+        .heart:nth-child(4) { top: 90%; left: 30%; animation-delay: 3s; font-size: 1.5rem; }
+        .heart:nth-child(5) { top: 75%; left: 60%; animation-delay: 4s; font-size: 2.1rem; }
+
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+            40% {
+                transform: scale3d(0.9, 0.9, 0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+            80% {
+                transform: scale3d(0.97, 0.97, 0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-200px) rotate(360deg); /* Float up higher */
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+            }
+            p {
+                font-size: 1.1rem;
+            }
+            .container {
+                padding: 30px 20px;
+                width: 300px;
+            }
+            .heart {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-rose-700 font-extrabold rounded-lg">Вика</h1>
+        <p class="text-red-900">Принцесса, Это для тебя в прекрасную ночь ❤️</p>
+        <!-- Floating hearts -->
+        <span class="heart">💖</span>
+        <span class="heart">❤️</span>
+        <span class="heart">💖</span>
+        <span class="heart">❤️</span>
+        <span class="heart">💖</span>
+    </div>
+</body>
+</html>
