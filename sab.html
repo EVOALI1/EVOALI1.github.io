@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Gift from Ali!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right top, #2c3e50, #4a6a8a);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            max-width: 90%;
+            width: 500px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+        .initial-content {
+            transition: opacity 0.5s ease-out;
+        }
+        .hidden-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in, transform 1s ease-in;
+        }
+        .hidden-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #e6b800;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            color: #34495e;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        .reveal-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px, rgba(0, 0, 0, 0.2);
+            border: 3px solid #f39c12;
+        }
+        .button-reveal {
+            background-color: #f39c12;
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .button-reveal:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+        .button-reveal:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 30px 20px;
+                width: 320px;
+            }
+            .button-reveal {
+                font-size: 1rem;
+                padding: 12px 25px;
+            }
+            .reveal-image {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="initial-content" id="initialContent">
+            <p class="text-gray-700 mb-6">Для кого-то Oсобенного...</p>
+            <button class="button-reveal" id="revealButton">
+                Открой меня
+            </button>
+        </div>
+        <div class="hidden-content" id="revealedContent">
+            <h1 class="text-yellow-600">Сабриш</h1>
+            <img src="https://via.placeholder.com/300" alt="Your special image" class="reveal-image">
+            <p class="text-blue-900">Моя дорогая, ты — самая удивительная тайна, которую я когда-либо разгадывал. И каждый день открываю в тебе что-то новое, что делает меня еще счастливее! ❤️</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('revealButton').addEventListener('click', function() {
+            const initialContent = document.getElementById('initialContent');
+            const revealedContent = document.getElementById('revealedContent');
+            initialContent.style.opacity = '0';
+            initialContent.style.pointerEvents = 'none';
+            setTimeout(() => {
+                initialContent.style.display = 'none';
+                revealedContent.classList.add('active');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
