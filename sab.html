@@ -65,6 +65,30 @@
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border: 3px solid #f39c12;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease-in, transform 1s ease-in;
+        }
+        .hidden-content.active .reveal-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .special-message {
+            color: #c0392b;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-top: 20px;
+            padding: 10px;
+            border-left: 4px solid #f39c12;
+            background-color: rgba(255, 245, 230, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(243, 156, 18, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(243, 156, 18, 0.8); }
+            100% { text-shadow: 0 0 5px rgba(243, 156, 18, 0.5); }
         }
         .button-reveal {
             background-color: #f39c12;
@@ -93,6 +117,9 @@
             p {
                 font-size: 1rem;
             }
+            .special-message {
+                font-size: 1.2rem;
+            }
             .container {
                 padding: 30px 20px;
                 width: 320px;
@@ -118,8 +145,9 @@
         </div>
         <div class="hidden-content" id="revealedContent">
             <h1 class="text-yellow-600">Сабриш</h1>
-            <img src="https://github.com/EVOALI1/EVOALI1.github.io/blob/main/Screenshot%202025-07-17%20015648.png="Your special image" class="reveal-image">
+            <img src="https://raw.githubusercontent.com/EVOALI1/EVOALI1.github.io/main/Screenshot%202025-07-17%20015648.png" alt="Your special image" class="reveal-image">
             <p class="text-blue-900">Моя дорогая, ты — самая удивительная тайна, которую я когда-либо разгадывал. И каждый день открываю в тебе что-то новое, что делает меня еще счастливее! ❤️</p>
+            <p class="special-message">Сабриш, ты — моё солнце в самый пасмурный день, и я хочу провести с тобой все свои рассветы и закаты. Ты делаешь мою жизнь ярче! ✨</p>
         </div>
     </div>
     <script>
