@@ -57,12 +57,16 @@
             line-height: 1.7;
             margin-bottom: 30px;
         }
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
         .reveal-image {
             max-width: 100%;
             height: auto;
             border-radius: 15px;
-            margin-top: 25px;
-            margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border: 3px solid #f39c12;
             opacity: 0;
@@ -72,6 +76,29 @@
         .hidden-content.active .reveal-image {
             opacity: 1;
             transform: scale(1);
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+            background-size: contain;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .hidden-content.active .heart {
+            opacity: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+        .heart:nth-child(1) { top: -20px; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: -10px; right: 10%; animation-delay: 0.5s; }
+        .heart:nth-child(3) { bottom: -20px; left: 20%; animation-delay: 1s; }
+        .heart:nth-child(4) { bottom: -10px; right: 20%; animation-delay: 1.5s; }
+        .heart:nth-child(5) { top: 50%; left: -10px; animation-delay: 2s; }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-20px) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
         }
         .special-message {
             color: #c0392b;
@@ -128,7 +155,7 @@
                 font-size: 1rem;
                 padding: 12px 25px;
             }
-            .reveal-image {
+            .image-container {
                 margin-top: 20px;
                 margin-bottom: 20px;
             }
@@ -145,7 +172,14 @@
         </div>
         <div class="hidden-content" id="revealedContent">
             <h1 class="text-yellow-600">Сабриш</h1>
-            <img src="https://raw.githubusercontent.com/EVOALI1/EVOALI1.github.io/main/IMG-20250717-WA0000(1).jpg" alt="Your special image" class="reveal-image">
+            <div class="image-container">
+                <img src="https://raw.githubusercontent.com/EVOALI1/EVOALI1.github.io/main/IMG-20250717-WA0000(1).jpg" alt="Your special image" class="reveal-image">
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+            </div>
             <p class="special-message">Сабриш, ты — моё солнце в самый пасмурный день, и я хочу провести с тобой все свои рассветы и закаты. Ты делаешь мою жизнь ярче! ✨</p>
         </div>
     </div>
