@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Love Animation for You</title>
-  <script src="https://cdn.jsdelivr.net/npm/mojs@1.6.0/build/mo.min.js"></script>
+  <title>Sabrina (Anime.js)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -14,7 +14,7 @@
       justify-content: center;
       align-items: center;
       background: linear-gradient(to bottom, #ff6b6b, #ffe6e6);
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       color: #fff;
       overflow: hidden;
     }
@@ -34,88 +34,84 @@
       text-align: center;
       opacity: 0;
     }
+    .heart {
+      width: 20px;
+      height: 20px;
+      background: #ff4d4d;
+      position: absolute;
+      transform: rotate(-45deg);
+      opacity: 0;
+    }
+    .heart::before, .heart::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #ff4d4d;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
   </style>
 </head>
 <body>
   <div id="love-container">
-    <div class="letter" id="letter-l">L</div>
-    <div class="letter" id="letter-o">O</div>
-    <div class="letter" id="letter-v">V</div>
-    <div class="letter" id="letter-e">E</div>
+    <div class="letter" id="letter-л">л</div>
+    <div class="letter" id="letter-ю">ю</div>
+    <div class="letter" id="letter-б"б</div>
+    <div class="letter" id="letter-л"л</div>
+    <div class="letter" id="letter-ю">ю</div>
   </div>
-  <div id="message">I love you forever!</div>
+  <div id="message">я люблю тебя навсегда!</div>
   <script>
-    const move = 1000; // Duration for letter animation (ms)
-    const delta = 150; // Delay between letters (ms)
-    const easing = 'sin.inOut';
-    const burstDuration = 800;
+    // Create heart elements for burst
+    for (let i = 0; i < 12; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      document.body.appendChild(heart);
+    }
 
-    // Define elements
-    const el = {
-      l: document.querySelector('#letter-l'),
-      o: document.querySelector('#letter-o'),
-      v: document.querySelector('#letter-v'),
-      e: document.querySelector('#letter-e'),
-      message: document.querySelector('#message')
-    };
-
-    // Heart-shaped burst animation
-    const heartBurst = new mojs.Burst({
-      left: 0, top: 0,
-      radius: { 20: 80 },
-      angle: 0,
-      count: 12,
-      children: {
-        shape: 'heart',
-        fill: ['#ff4d4d', '#ff99cc', '#ff6666'],
-        radius: 10,
-        duration: burstDuration,
-        easing: 'quad.out'
-      }
+    const timeline = anime.timeline({
+      easing: 'easeInOutSine',
+      loop: false
     });
 
-    // Create timeline
-    const crtLoveTl = new mojs.Timeline();
-
-    // Animate each letter
-    [el.l, el.o, el.v, el.e].forEach((letter, index) => {
-      crtLoveTl.add(
-        new mojs.Html({
-          el: letter,
-          opacity: { 0: 1 },
-          duration: move,
-          easing: easing,
-          delay: index * delta
-        }).then({
-          opacity: { 1: 0 },
-          duration: move,
-          easing: easing
-        })
-      );
+    // Animate letters
+    document.querySelectorAll('.letter').forEach((letter, index) => {
+      timeline.add({
+        targets: letter,
+        opacity: [0, 1],
+        duration: 1000,
+        delay: index * 150
+      }).add({
+        targets: letter,
+        opacity: [1, 0],
+        duration: 1000
+      });
     });
 
-    // Animate message and burst
-    crtLoveTl.add(
-      new mojs.Html({
-        el: el.message,
-        opacity: { 0: 1 },
-        duration: move,
-        easing: easing,
-        delay: 4 * delta + move
-      }),
-      new mojs.Tween({
-        duration: move,
-        delay: 4 * delta + move,
-        onComplete: () => {
-          heartBurst
-            .tune({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
-            .replay();
-        }
-      })
-    );
-
-    // Play the timeline
-    crtLoveTl.play();
+    // Animate message and hearts
+    timeline.add({
+      targets: '#message',
+      opacity: [0, 1],
+      duration: 1000,
+      delay: 600
+    }).add({
+      targets: '.heart',
+      opacity: [0, 1],
+      scale: [0, 1],
+      translateX: () => anime.random(-100, 100),
+      translateY: () => anime.random(-100, 100),
+      rotate: () => anime.random(0, 360),
+      duration: 800,
+      delay: anime.stagger(50)
+    });
   </script>
 </body>
 </html>
