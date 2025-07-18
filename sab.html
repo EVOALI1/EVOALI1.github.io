@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sabrina</title>
+  <title>Sabrina</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -13,26 +14,30 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(to bottom, #ff6b6b, #ffe6e6);
-      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #ff4d4d, #ffb6c1, #ffe6e6);
+      font-family: 'Lobster', cursive;
       color: #fff;
       overflow: hidden;
+      position: relative;
     }
     #love-container {
       display: flex;
-      gap: 10px;
+      gap: 15px;
+      z-index: 2;
     }
     .letter {
-      font-size: 48px;
+      font-size: 60px;
       font-weight: bold;
       color: #fff;
       opacity: 0;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
     #message {
-      margin-top: 20px;
-      font-size: 24px;
+      margin-top: 30px;
+      font-size: 36px;
       text-align: center;
       opacity: 0;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
     }
     .heart {
       width: 20px;
@@ -41,12 +46,13 @@
       position: absolute;
       transform: rotate(-45deg);
       opacity: 0;
+      z-index: 1;
     }
     .heart::before, .heart::after {
       content: '';
       width: 20px;
       height: 20px;
-      background: #ff4d4d;
+      background: inherit;
       border-radius: 50%;
       position: absolute;
     }
@@ -58,9 +64,47 @@
       left: 10px;
       top: 0;
     }
+    .sparkle {
+      width: 5px;
+      height: 5px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      opacity: 0;
+      z-index: 0;
+    }
+    #replay-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-family: 'Lobster', cursive;
+      color: #fff;
+      background: #ff4d4d;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      opacity: 0;
+      transition: background 0.3s;
+      z-index: 2;
+    }
+    #replay-btn:hover {
+      background: #ff6666;
+    }
+    #error {
+      display: none;
+      color: #fff;
+      background: rgba(255, 0, 0, 0.8);
+      padding: 10px;
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
   </style>
 </head>
 <body>
+  <div id="error">Ошибка: Анимация не загрузилась. Проверь консоль для деталей.</div>
   <div id="love-container">
     <div class="letter" id="letter-l1">Л</div>
     <div class="letter" id="letter-yu1">Ю</div>
@@ -69,56 +113,130 @@
     <div class="letter" id="letter-yu2">Ю</div>
   </div>
   <div id="message">Я люблю тебя навсегда!</div>
+  <button id="replay-btn">Ещё раз</button>
   <script>
     try {
       console.log('Script started');
+
       // Create heart elements for burst
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 20; i++) {
         const heart = document.createElement('div');
         heart.className = 'heart';
+        heart.style.background = ['#ff4d4d', '#ff99cc', '#ff6666'][i % 3];
         document.body.appendChild(heart);
       }
 
-      const timeline = anime.timeline({
-        easing: 'easeInOutSine',
-        loop: false
-      });
+      // Create sparkle elements for background
+      for (let i = 0; i < 30; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.top = `${Math.random() * 100}%`;
+        document.body.appendChild(sparkle);
+      }
 
-      // Animate letters
-      document.querySelectorAll('.letter').forEach((letter, index) => {
-        console.log(`Adding animation for letter ${index}`);
-        timeline.add({
-          targets: letter,
-          opacity: [0, 1],
-          duration: 1000,
-          delay: index * 150
-        }).add({
-          targets: letter,
-          opacity: [1, 0],
-          duration: 1000
+      // Check if Anime.js loaded
+      if (!window.anime) {
+        throw new Error('Anime.js library not loaded');
+      }
+
+      function playAnimation() {
+        // Reset elements
+        document.querySelectorAll('.letter, #message, #replay-btn, .heart, .sparkle').forEach(el => {
+          el.style.opacity = 0;
+          if (el.classList.contains('heart') || el.classList.contains('sparkle')) {
+            el.style.transform = 'rotate(-45deg) scale(0)';
+          }
         });
-      });
 
-      // Animate message and hearts
-      console.log('Adding message and hearts');
-      timeline.add({
-        targets: '#message',
-        opacity: [0, 1],
-        duration: 1000,
-        delay: 750
-      }).add({
-        targets: '.heart',
-        opacity: [0, 1],
-        scale: [0, 1],
-        translateX: () => anime.random(-100, 100),
-        translateY: () => anime.random(-100, 100),
-        rotate: () => anime.random(0, 360),
-        duration: 800,
-        delay: anime.stagger(50)
+        const timeline = anime.timeline({
+          easing: 'easeInOutSine',
+          loop: false
+        });
+
+        // Animate letters with scale and rotation
+        document.querySelectorAll('.letter').forEach((letter, index) => {
+          console.log(`Adding animation for letter ${index}`);
+          timeline.add({
+            targets: letter,
+            opacity: [0, 1],
+            scale: [0.5, 1.2],
+            rotate: [anime.random(-15, 15), 0],
+            duration: 1000,
+            delay: index * 200
+          }).add({
+            targets: letter,
+            opacity: [1, 0],
+            scale: [1.2, 0.8],
+            easing: 'easeOutBounce',
+            duration: 1000
+          });
+        });
+
+        // Animate message with slide and glow
+        console.log('Adding message animation');
+        timeline.add({
+          targets: '#message',
+          opacity: [0, 1],
+          translateY: [50, 0],
+          textShadow: [
+            '0 0 0 rgba(255, 255, 255, 0)',
+            '0 0 20px rgba(255, 255, 255, 0.9)'
+          ],
+          duration: 1200,
+          delay: 1000
+        });
+
+        // Animate heart bursts (multiple waves)
+        console.log('Adding heart bursts');
+        for (let i = 0; i < 3; i++) {
+          timeline.add({
+            targets: '.heart',
+            opacity: [0, 1],
+            scale: [0, anime.random(1, 1.5)],
+            translateX: () => anime.random(-150, 150),
+            translateY: () => anime.random(-150, 150),
+            rotate: () => anime.random(0, 360),
+            duration: 1000,
+            delay: anime.stagger(50, { start: 1000 + i * 300 })
+          }, '-=800');
+        }
+
+        // Animate background sparkles
+        console.log('Adding sparkle animation');
+        timeline.add({
+          targets: '.sparkle',
+          opacity: [0, 0.8, 0],
+          scale: [0, 1, 0],
+          duration: 2000,
+          delay: anime.stagger(100, { start: 0 }),
+          loop: true
+        }, 0);
+
+        // Animate replay button
+        console.log('Adding replay button animation');
+        timeline.add({
+          targets: '#replay-btn',
+          opacity: [0, 1],
+          translateY: [20, 0],
+          duration: 800,
+          delay: 1500
+        });
+
+        console.log('Playing timeline');
+      }
+
+      // Initial play
+      playAnimation();
+
+      // Replay button functionality
+      document.querySelector('#replay-btn').addEventListener('click', () => {
+        console.log('Replay button clicked');
+        playAnimation();
       });
-      console.log('Playing timeline');
     } catch (error) {
       console.error('Animation error:', error);
+      document.querySelector('#error').style.display = 'block';
     }
   </script>
 </body>
