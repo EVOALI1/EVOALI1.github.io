@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sabrina (Anime.js)</title>
+  <title>sabrina</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   <style>
     body {
@@ -62,56 +62,64 @@
 </head>
 <body>
   <div id="love-container">
-    <div class="letter" id="letter-л">л</div>
-    <div class="letter" id="letter-ю">ю</div>
-    <div class="letter" id="letter-б"б</div>
-    <div class="letter" id="letter-л"л</div>
-    <div class="letter" id="letter-ю">ю</div>
+    <div class="letter" id="letter-l1">Л</div>
+    <div class="letter" id="letter-yu1">Ю</div>
+    <div class="letter" id="letter-b">Б</div>
+    <div class="letter" id="letter-l2">Л</div>
+    <div class="letter" id="letter-yu2">Ю</div>
   </div>
-  <div id="message">я люблю тебя навсегда!</div>
+  <div id="message">Я люблю тебя навсегда!</div>
   <script>
-    // Create heart elements for burst
-    for (let i = 0; i < 12; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      document.body.appendChild(heart);
-    }
+    try {
+      console.log('Script started');
+      // Create heart elements for burst
+      for (let i = 0; i < 12; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        document.body.appendChild(heart);
+      }
 
-    const timeline = anime.timeline({
-      easing: 'easeInOutSine',
-      loop: false
-    });
+      const timeline = anime.timeline({
+        easing: 'easeInOutSine',
+        loop: false
+      });
 
-    // Animate letters
-    document.querySelectorAll('.letter').forEach((letter, index) => {
+      // Animate letters
+      document.querySelectorAll('.letter').forEach((letter, index) => {
+        console.log(`Adding animation for letter ${index}`);
+        timeline.add({
+          targets: letter,
+          opacity: [0, 1],
+          duration: 1000,
+          delay: index * 150
+        }).add({
+          targets: letter,
+          opacity: [1, 0],
+          duration: 1000
+        });
+      });
+
+      // Animate message and hearts
+      console.log('Adding message and hearts');
       timeline.add({
-        targets: letter,
+        targets: '#message',
         opacity: [0, 1],
         duration: 1000,
-        delay: index * 150
+        delay: 750
       }).add({
-        targets: letter,
-        opacity: [1, 0],
-        duration: 1000
+        targets: '.heart',
+        opacity: [0, 1],
+        scale: [0, 1],
+        translateX: () => anime.random(-100, 100),
+        translateY: () => anime.random(-100, 100),
+        rotate: () => anime.random(0, 360),
+        duration: 800,
+        delay: anime.stagger(50)
       });
-    });
-
-    // Animate message and hearts
-    timeline.add({
-      targets: '#message',
-      opacity: [0, 1],
-      duration: 1000,
-      delay: 600
-    }).add({
-      targets: '.heart',
-      opacity: [0, 1],
-      scale: [0, 1],
-      translateX: () => anime.random(-100, 100),
-      translateY: () => anime.random(-100, 100),
-      rotate: () => anime.random(0, 360),
-      duration: 800,
-      delay: anime.stagger(50)
-    });
+      console.log('Playing timeline');
+    } catch (error) {
+      console.error('Animation error:', error);
+    }
   </script>
 </body>
 </html>
